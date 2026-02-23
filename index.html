@@ -230,12 +230,42 @@ calculateOverall();
 });
 
 form.addEventListener('submit',e=>{
+
 e.preventDefault();
 
-fetch(scriptURL,{method:'POST',body:new FormData(form)})
-.then(()=>{document.getElementById("thankYouPopup").style.display="flex";})
-})
+const submitBtn = document.querySelector("button[type='submit']");
 
+// Disable immediately
+submitBtn.disabled = true;
+submitBtn.innerText = "Submitting...";
+
+fetch(scriptURL,{
+method:'POST',
+body:new FormData(form)
+})
+.then(response => response.json())
+.then(data => {
+
+// If duplicate mobile
+if(data.result === "duplicate"){
+alert("Feedback already submitted from this mobile number.");
+submitBtn.disabled = false;
+submitBtn.innerText = "Submit Feedback";
+return;
+}
+
+// Success
+document.getElementById("thankYouPopup").style.display="flex";
+form.reset();
+
+})
+.catch(error=>{
+alert("Error submitting feedback. Please try again.");
+submitBtn.disabled = false;
+submitBtn.innerText = "Submit Feedback";
+});
+
+});
 </script>
 </body>
 </html>
