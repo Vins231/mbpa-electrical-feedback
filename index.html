@@ -243,7 +243,7 @@ fetch(scriptURL,{
 method:'POST',
 body:new FormData(form)
 })
-.then(response => response.json())
+.then(response => response.text())
 .then(data => {
 
 // If duplicate mobile
@@ -269,3 +269,4 @@ submitBtn.innerText = "Submit Feedback";
 </script>
 </body>
 </html>
+
