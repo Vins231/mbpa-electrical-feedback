@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<title>MBPA Electrical Feedback</title>
+
+<style>
+body{font-family:'Segoe UI';background:#eef2f7;margin:0;}
+
+.header{
+background:#002147;
+text-align:center;
+padding:20px;
+color:white;
+font-size:18px;
+font-weight:bold;
+}
+
+.logo{
+width:80px;
+background:white;
+padding:8px;
+border-radius:50%;
+margin-bottom:8px;
+}
+
+.card{
+background:white;
+margin:20px;
+padding:20px;
+border-radius:15px;
+}
+
+input,select,textarea{
+width:100%;
+padding:10px;
+margin-top:6px;
+margin-bottom:12px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+width:100%;
+padding:16px;
+background:#003366;
+color:white;
+border:none;
+border-radius:12px;
+font-size:17px;
+}
+
+.star-rating{
+display:flex;
+gap:8px;
+margin-bottom:15px;
+}
+
+.star-rating input{display:none;}
+
+.star-rating i{
+font-size:30px;
+color:#ccc;
+cursor:pointer;
+}
+
+#thankYouPopup{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+justify-content:center;
+align-items:center;
+}
+
+.popup-box{
+background:white;
+padding:20px;
+border-radius:12px;
+text-align:center;
+width:80%;
+max-width:300px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<img src="MbPA-scaled.png" class="logo"><br>
+FEEDBACK FORM FOR ELECTRICAL SERVICES (RADHA ELECTRICALS)
+</div>
+
+<div class="card">
+
+<form id="feedbackForm">
+
+<label>Name</label>
+<input type="text" name="name" required>
+
+<label>Mobile Number</label>
+<input type="tel" name="mobile" required>
+
+<label>Designation</label>
+<input type="text" name="designation">
+
+<label>Colony / Premises</label>
+<select name="colony" id="colony" onchange="showOtherField()" required>
+<option value="">Select Colony</option>
+<option>Residential - Colaba</option>
+<option>Residential - Mazgaon</option>
+<option>Residential - Wadala</option>
+<option>Residential - Worli</option>
+<option>Office</option>
+<option value="Others">Others</option>
+</select>
+
+<div id="otherColonyDiv" style="display:none;">
+<label>Please Specify</label>
+<input type="text" name="other_colony">
+</div>
+
+<hr>
+<h4>Complaint Registration</h4>
+<div class="star-rating">
+<input type="radio" name="registration" value="1" id="c1"><label for="c1"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="registration" value="2" id="c2"><label for="c2"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="registration" value="3" id="c3"><label for="c3"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="registration" value="4" id="c4"><label for="c4"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="registration" value="5" id="c5"><label for="c5"><i class="fa-solid fa-star"></i></label>
+</div>
+
+<h4>Response Time</h4>
+<div class="star-rating">
+<input type="radio" name="response" value="1" id="r1"><label for="r1"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="response" value="2" id="r2"><label for="r2"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="response" value="3" id="r3"><label for="r3"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="response" value="4" id="r4"><label for="r4"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="response" value="5" id="r5"><label for="r5"><i class="fa-solid fa-star"></i></label>
+</div>
+
+<h4>Quality of Work</h4>
+<div class="star-rating">
+<input type="radio" name="quality" value="1" id="q1"><label for="q1"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="quality" value="2" id="q2"><label for="q2"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="quality" value="3" id="q3"><label for="q3"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="quality" value="4" id="q4"><label for="q4"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="quality" value="5" id="q5"><label for="q5"><i class="fa-solid fa-star"></i></label>
+</div>
+
+<h4>Behaviour of Staff</h4>
+<div class="star-rating">
+<input type="radio" name="staff" value="1" id="s1"><label for="s1"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="staff" value="2" id="s2"><label for="s2"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="staff" value="3" id="s3"><label for="s3"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="staff" value="4" id="s4"><label for="s4"><i class="fa-solid fa-star"></i></label>
+<input type="radio" name="staff" value="5" id="s5"><label for="s5"><i class="fa-solid fa-star"></i></label>
+</div>
+
+<label>Overall Score</label>
+<input type="text" id="overallRating" readonly>
+
+<label>Remarks</label>
+<textarea name="remarks"></textarea>
+
+<button type="submit">Submit Feedback</button>
+
+</form>
+</div>
+
+<div id="thankYouPopup">
+<div class="popup-box">
+<h3>Thank You!</h3>
+<p>Your feedback submitted successfully</p>
+<button onclick="closeForm()">Close</button>
+</div>
+</div>
+
+<script>
+
+function closeForm(){
+document.getElementById("thankYouPopup").style.display="none";
+window.location.href="about:blank";
+}
+
+function showOtherField(){
+var c=document.getElementById("colony").value;
+document.getElementById("otherColonyDiv").style.display=(c==="Others")?"block":"none";
+}
+
+function calculateOverall(){
+
+let reg=document.querySelector('input[name="registration"]:checked');
+let res=document.querySelector('input[name="response"]:checked');
+let qual=document.querySelector('input[name="quality"]:checked');
+let beh=document.querySelector('input[name="staff"]:checked');
+
+if(reg && res && qual && beh){
+
+let avg=(parseInt(reg.value)+parseInt(res.value)+parseInt(qual.value)+parseInt(beh.value))/4;
+document.getElementById("overallRating").value=avg.toFixed(2)+" / 5";
+
+}
+
+}
+
+const scriptURL='https://script.google.com/macros/s/AKfycbw9T8Jmoyyn5L31B2qzGSGxg-TeDd9MZHNy94GdvgQ2x1amcuO1ADVAu2z2UaQ1euY/exec'
+const form=document.getElementById('feedbackForm')
+
+document.querySelectorAll('.star-rating input').forEach(radio=>{
+radio.addEventListener('change',function(){
+
+let g=this.name;
+let v=this.value;
+
+document.querySelectorAll('input[name="'+g+'"]').forEach(r=>{
+let star=r.nextElementSibling.querySelector('i');
+star.style.color=(parseInt(r.value)<=v)?"gold":"#ccc";
+});
+
+calculateOverall();
+
+});
+});
+
+form.addEventListener('submit',e=>{
+e.preventDefault();
+
+fetch(scriptURL,{method:'POST',body:new FormData(form)})
+.then(()=>{document.getElementById("thankYouPopup").style.display="flex";})
+})
+
+</script>
+</body>
+</html>
